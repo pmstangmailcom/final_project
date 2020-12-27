@@ -8,18 +8,22 @@ width: 50%;
 border-spacing: 0;
 
 }
-
+tr {
+border: 2px solid black;
+}
+td {
+border: 2px solid black;
+text-align: center;
+}
 tr:nth-child(2n){
 background-color: GreenYellow;
-height: 20px;
+height: 30px;
+
 }
 
 tr:nth-child(2n+1){
 background-color: MediumAquamarine;
 height: 20px;
+
 }
 
-caption {
-font-weight: bolder;
-font-size: 20px;
-}

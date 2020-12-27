@@ -5,16 +5,21 @@
     <meta charset="UTF-8">
     <title>{% block title %}Main page{% endblock %}</title>
 
-
-
     <link rel="stylesheet" href="{% static 'services/css/services.css' %}">
+
 
 </head>
 <header>
     {% block menu %}
-       <a href="{% url 'user_login' %}">Login</a> |
-       <a href="{% url 'user_logout' %}">Logout</a> |
-       <a href="{% url 'user_register' %}">Register</a> |
+
+
+    <a href="{% url 'services:all_orders' %}">All orders</a> |
+    <a href="{% url 'services:user_orders' %}">Your orders</a> |
+    <a href="{% url 'services:add_new_order' %}">Add new order</a> |
+    <a href="{% url 'services:new_executor' %}">Become executor</a> |
+    <a href="{% url 'user_login' %}">Login</a> |
+    <a href="{% url 'user_logout' %}">Logout</a> |
+    <a href="{% url 'user_register' %}">Register</a> |
 
 
     {% endblock %}

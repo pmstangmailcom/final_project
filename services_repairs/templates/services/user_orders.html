@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Main page{% endblock %}
+{% block body %}
+
+    <h2>{{ request.user }}'s orders</h2>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Notes</th>
+        <th>Date</th>
+        <th>User</th>
+        <th>Update</th>
+        <td> | </td>
+        <th>Delete</th>
+        <th>Accepted</th>
+        <th>Done</th>
+        <th></th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.name }}</td>
+        <td>{{ order.category }}</td>
+        <td>{{ order.notes }}</td>
+        <td>{{ order.create_on_date }}</td>
+        <td>{{ order.user_id }}</td>
+        <td><a href="{% url 'services:update_order' order.id %}">Update</a></td>
+        <td> | </td>
+        <td><a href="{% url 'services:delete_order' order.id %}">Delete</a></td>
+
+    </tr>
+
+    {% endfor %}
+</table>
+
+
+{% endblock %}

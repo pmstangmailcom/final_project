@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Update{% endblock %}
+{% block body %}
+
+<h3>Please change your order</h3>
+<form action="{% url 'services:update_order' order.id %}" method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+
+    </table>
+    <input type="submit" value="Save" class="btn btn-outline-info">
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Become executor{% endblock %}
+{% block body %}
+
+<h3>Please fill the form</h3>
+<form action="." method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+
+    </table>
+    <input type="submit" value="Submit" class="btn btn-outline-info">
+
+</form>
+
+{% endblock %}

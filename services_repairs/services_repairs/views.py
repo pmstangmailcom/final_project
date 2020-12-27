@@ -37,7 +37,7 @@ def user_login(request):
                 if user is not None:
                     if user.is_active:
                         login(request, user)
-                        return redirect('all_orders')
+                        return redirect('services:user_orders')
 
                     return HttpResponse('Disabled account')
                 else:

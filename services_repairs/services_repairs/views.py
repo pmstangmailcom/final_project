@@ -26,7 +26,7 @@ def user_register(request):
 def user_login(request):
 
     if request.user.is_authenticated:
-        return redirect('all_orders')
+        return redirect('services:user_orders')
     else:
         if request.method == 'POST':
             form = forms.LoginForm(request.POST)

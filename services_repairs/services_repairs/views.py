@@ -16,9 +16,8 @@ def user_register(request):
                 new_user = form.save(commit=False)
                 new_user.set_password(form.cleaned_data['password'])
                 new_user.save()
-                new_user = form.cleaned_data.get('username')
+                return redirect('user_login')
 
-                return render(request, 'account/register_done.html', {'new_user': new_user})
         context = {'form': form}
         return render(request, 'account/register.html', context)
 

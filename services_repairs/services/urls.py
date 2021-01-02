@@ -19,7 +19,8 @@ urlpatterns = [
     path('accept/<int:id>', views.accept_order, name='accept_order'),
     path('done/<int:id>', views.done_order, name='done_order'),
 
+    path('category/photo/', views.filter_categories, name='photo_video'),
 
 
 
-    ]
+]

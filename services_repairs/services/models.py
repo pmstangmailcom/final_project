@@ -18,19 +18,15 @@ class Executor(models.Model):
     # email = models.EmailField(max_length=20, verbose_name='email', blank=True)
     category = models.ForeignKey(Category, related_name='executor_to_category', verbose_name='category',
                                  on_delete=models.RESTRICT)
-
     order_accepted_num = models.IntegerField(verbose_name='Order accepted Number', default=0)
     order_done_num = models.IntegerField(verbose_name='Order Done Number', default=0)
     user = models.OneToOneField(User, on_delete=models.RESTRICT, blank=True, null=True, related_name='executor')
-
     # class Meta:
     #     proxy = True
 
-
     def __str__(self):
-        return f'{self.user}({self.category})'
-
-# class Ex(User):
+        return f'{self.user}'
+        # return f'{self.user}  ({self.category})'
 
 
 class OrderService(models.Model):

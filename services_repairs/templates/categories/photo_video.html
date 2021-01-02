@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<h3>Photo & Video</h3>
+
+{% for order in orders_photo %}
+ <p> Name: {{ order.name }}<br>
+     Notes: {{ order.notes }}<br>
+     Date: {{ order.create_on_date }}<br>
+     <a href="{% url 'services:order_details' order.id %}">Details</a>
+</p>
+ {% endfor %}
+{% endblock %}

@@ -2,7 +2,7 @@
 {% block title %}Main page{% endblock %}
 {% block body %}
 
-    <h2>{{ request.user }}'s orders</h2>
+<h2>{{ request.user }}'s orders</h2>
 
 <table>
     <tr>
@@ -31,18 +31,83 @@
             <i style="color: green;" class="fas fa-check">Accepted</i>
             {% else %}
             <i style="color: red;" class="fas fa-times">Not accepted</i>
-            {% endif %}</td>
+            {% endif %}
+        </td>
         <td>
-        {% if order.is_done %}
+            {% if order.is_done %}
             <i style="color: green;" class="fas fa-check">Done</i>
             {% else %}
             <i style="color: red;" class="fas fa-times">Not Done</i>
-            {% endif %} </td>
+            {% endif %}
+        </td>
         <td><a href="{% url 'services:order_details' order.id %}">Details</a></td>
-
     </tr>
-
     {% endfor %}
+
+    {% if request.user.executor %}
+
+    <th>Your accepted and done orders</th>
+
+
+    {% for order in orders_by_executor %}
+
+    <tr>
+        <td>{{ order.name }}</td>
+        <td>{{ order.category }}</td>
+        <td>{{ order.notes }}</td>
+        <td>{{ order.create_on_date }}</td>
+        <td>{{ order.user_id }}</td>
+        <td><a href="{% url 'services:update_order' order.id %}">Update</a></td>
+        <td><a href="{% url 'services:delete_order' order.id %}">Delete</a></td>
+        <td>
+            {% if order.is_accepted %}
+            <i style="color: green;" class="fas fa-check">Accepted</i>
+            {% else %}
+            <i style="color: red;" class="fas fa-times">Not accepted</i>
+            {% endif %}
+        </td>
+        <td>
+            {% if order.is_done %}
+            <i style="color: green;" class="fas fa-check">Done</i>
+            {% else %}
+            <i style="color: red;" class="fas fa-times">Not Done</i>
+            {% endif %}
+        </td>
+        <td><a href="{% url 'services:order_details' order.id %}">Details</a></td>
+    </tr>
+    {% endfor %}
+
+    <th>Your category orders not accepted</th>
+    {% for order in orders_category_executor %}
+
+    <tr>
+        <td>{{ order.name }}</td>
+        <td>{{ order.category }}</td>
+        <td>{{ order.notes }}</td>
+        <td>{{ order.create_on_date }}</td>
+        <td>{{ order.user_id }}</td>
+        <td><a href="{% url 'services:update_order' order.id %}">Update</a></td>
+        <td><a href="{% url 'services:delete_order' order.id %}">Delete</a></td>
+        <td>
+            {% if order.is_accepted %}
+            <i style="color: green;" class="fas fa-check">Accepted</i>
+            {% else %}
+            <i style="color: red;" class="fas fa-times">Not accepted</i>
+            {% endif %}
+        </td>
+        <td>
+            {% if order.is_done %}
+            <i style="color: green;" class="fas fa-check">Done</i>
+            {% else %}
+            <i style="color: red;" class="fas fa-times">Not Done</i>
+            {% endif %}
+        </td>
+        <td><a href="{% url 'services:order_details' order.id %}">Details</a></td>
+    </tr>
+    {% endfor %}
+
+
+    {% endif %}
 </table>
 
 

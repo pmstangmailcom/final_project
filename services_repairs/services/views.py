@@ -55,49 +55,69 @@ def delete_order(request, id):
 
 def all_orders(request):
     orders = models.OrderService.objects.all()
-    return render(request, 'services/index.html', {'orders': orders, })
+    return render(request, 'services/all_orders.html', {'orders': orders, })
 
 @login_required(login_url='user_login')
 def user_orders(request):
     orders = models.OrderService.objects.filter(user_id=request.user)
+    # if request.user == request.user.executor:
+    #     orders_by_executor = models.OrderService.objects.filter(executor__user=request.user)
+    #     orders_category_executor = models.OrderService.objects.filter(category=request.user.executor.category)
+    #     context = {
+    #         'orders': orders,
+    #         'orders_by_executor': orders_by_executor,
+    #         'orders_category_executor': orders_category_executor
+    #     }
+    #
+    #     return render(request, 'services/user_orders.html', context)
+    #
+    # return render(request, 'services/user_orders.html', {'orders': orders})
+    return render(request, 'services/user_orders.html', {'orders': orders})
 
-    return render(request, 'services/user_orders.html', {'orders': orders, })
 
 
 @login_required(login_url='user_login')
 def accept_order(request, id: int):
     order = get_object_or_404(OrderService.objects, id=id)
-    order.is_accepted = True
-    order.executor = request.user.executor
-    order.executor.order_accepted_num += 1
-    order.save()
-    order.executor.save()
-    return redirect('services:order_details', order.id)
+    if order.category == request.user.executor.category:
+        order.is_accepted = True
+        order.executor = request.user.executor
+        order.executor.order_accepted_num += 1
+        order.save()
+        order.executor.save()
+        return redirect('services:order_details', order.id)
+    else:
+        return redirect('services:order_details', order.id)
+
 
 @login_required(login_url='user_login')
 def done_order(request, id: int):
     order = get_object_or_404(OrderService.objects, id=id)
-    order.is_done = True
-    order.executor = request.user.executor
-    order.executor.order_done_num += 1
-    order.save()
-    order.executor.save()
-    return redirect('services:order_details', order.id)
+    # if orders_category_executor == request.user:
+    if order.user_id == request.user:
+        order.is_done = True
+        # order.executor = request.user.executor
+        order.executor.order_done_num += 1
+        order.save()
+        order.executor.save()
+        return redirect('services:order_details', order.id)
+    else:
+        return redirect('services:order_details', order.id)
 
 
 def new_executor(request):
     if request.method == 'POST':
         form = forms.ExecutorForm(request.POST)
         if form.is_valid():
-            new_executor = form.save(commit=False)
-            new_executor.user_id = request.user
-            new_executor.save()
-            return redirect('services:new_executor', new_executor.id)
+            executor = form.save(commit=False)
+            # executor.user_id = request.user
+            executor.save()
+            return redirect('services:executor_details', executor.id)
         else:
-            return render(request, 'services/profile.html', {'form': form})
+            return render(request, 'services/new_executor.html', {'form': form})
     else:
         form = forms.ExecutorForm()
-        return render(request, 'services/profile.html', {'form': form})
+        return render(request, 'services/new_executor.html', {'form': form})
 
 @login_required(login_url='user_login')
 def executor_details(request, id: int):
@@ -105,8 +125,16 @@ def executor_details(request, id: int):
 
     return render(request, 'services/profile.html', {'executor': executor, })
 
+
 def check_group(request):
     return request.user.groups.filter(name='Staff').exist()
 
+def filter_categories(request):
+    orders_photo = models.OrderService.objects.filter(category__name='Фото, видео', is_done=False)
+    context = {
+        'orders_photo': orders_photo,
+
+    }
+    return render(request, 'categories/photo_video.html', context)
 
 

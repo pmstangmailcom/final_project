@@ -32,18 +32,19 @@
 
     {% block categories %}
 
-    <a href="{% url 'services:photo_video' %}">Photo&video</a> |
+        <a href="{% url 'services:photo_video' %}">Photo&video</a> |
+        <a href="{% url 'services:lawyer' %}">Legal services</a> |
+        <a href="{% url 'services:sewing' %}">Clothing Sewing&Repair</a> |
+        <a href="{% url 'services:repair' %}">Household Appliances Repair</a> |
+        <a href="{% url 'services:teaching' %}">Teaching</a> |
 
 
     {% endblock %}
 
 </p>
-
 </header>
 <body>
 {% block body %}Hello! I'm empty{% endblock %}
-
-
 
 </body>
 </html>

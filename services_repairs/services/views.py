@@ -133,11 +133,37 @@ def check_group(request):
     return request.user.groups.filter(name='Staff').exist()
 
 
-def filter_categories(request):
+# def filter_categories(request):
+#     orders_photo = models.OrderService.objects.filter(category__name='Фото, видео', is_done=False)
+#     orders_lawyer = models.OrderService.objects.filter(category__name='Юридические услуги', is_done=False)
+#     orders_sewing = models.OrderService.objects.filter(category__name='Пошив и ремонт одежды', is_done=False)
+#     orders_repair = models.OrderService.objects.filter(category__name='Ремонт бытовой техники', is_done=False)
+#     orders_teaching = models.OrderService.objects.filter(category__name='Обучение, репетиторство', is_done=False)
+#     context = {
+#         'orders_photo': orders_photo,
+#         'orders_lawyer': orders_lawyer,
+#         'orders_sewing': orders_sewing,
+#         'orders_repair': orders_repair,
+#         'orders_teaching': orders_teaching,
+#     }
+#     return render(request, 'categories/photo_video.html',  context)
+
+def filter_photo(request):
     orders_photo = models.OrderService.objects.filter(category__name='Фото, видео', is_done=False)
-    context = {
-        'orders_photo': orders_photo,
-    }
-    return render(request, 'categories/photo_video.html', context)
+    return render(request, 'categories/photo_video.html', {'orders_photo': orders_photo, })
 
+def filter_lawyer(request):
+    orders_lawyer = models.OrderService.objects.filter(category__name='Юридические услуги', is_done=False)
+    return render(request, 'categories/lawyer.html', {'orders_lawyer': orders_lawyer, })
 
+def filter_sewing(request):
+    orders_sewing = models.OrderService.objects.filter(category__name='Пошив и ремонт одежды', is_done=False)
+    return render(request, 'categories/sewing.html', {'orders_sewing': orders_sewing, })
+
+def filter_repair(request):
+    orders_repair = models.OrderService.objects.filter(category__name='Ремонт бытовой техники', is_done=False)
+    return render(request, 'categories/repair.html', {'orders_repair': orders_repair, })
+
+def filter_teaching(request):
+    orders_teaching = models.OrderService.objects.filter(category__name='Обучение, репетиторство', is_done=False)
+    return render(request, 'categories/teaching.html', {'orders_teaching': orders_teaching, })

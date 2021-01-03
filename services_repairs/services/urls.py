@@ -21,7 +21,11 @@ urlpatterns = [
     path('accept/<int:id>', views.accept_order, name='accept_order'),
     path('done/<int:id>', views.done_order, name='done_order'),
 
-    path('category/photo/', views.filter_categories, name='photo_video'),
+    path('category/photo/', views.filter_photo, name='photo_video'),
+    path('category/lawyer/', views.filter_lawyer, name='lawyer'),
+    path('category/sewing/', views.filter_sewing, name='sewing'),
+    path('category/repair/', views.filter_repair, name='repair'),
+    path('category/teaching/', views.filter_teaching, name='teaching'),
 
 
 

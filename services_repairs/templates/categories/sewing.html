@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% block title %}Photo&video{% endblock %}
+{% block title %}sewing{% endblock %}
 {% block body %}
-<h3>Photo & Video</h3>
+<h3>Clothing sewing and repair</h3>
 
-{% for order in orders_photo %}
+{% for order in orders_sewing %}
  <p> Name: {{ order.name }}<br>
      Notes: {{ order.notes }}<br>
      Date: {{ order.create_on_date }}<br>

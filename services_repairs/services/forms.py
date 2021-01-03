@@ -11,9 +11,20 @@ class ServicesForm(forms.ModelForm):
         # exclude = ['user_id']
 
 class ExecutorForm(forms.ModelForm):
+    # class Meta:
+    #     model = models.Executor
+    #     fields = '__all__'
+    #     # fields = ('category',)
+
     class Meta:
         model = models.Executor
         fields = '__all__'
-        # fields = ('category',)
+        widgets = {
+            'user': forms.HiddenInput(),
+            'order_accepted_num': forms.HiddenInput(),
+            'order_done_num': forms.HiddenInput(),
+        }
+
+
 
 

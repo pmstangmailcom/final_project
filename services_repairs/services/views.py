@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -109,8 +108,13 @@ def done_order(request, id: int):
 def new_executor(request):
     if request.method == 'POST':
         # form = forms.ExecutorForm(request.POST)
-        form = forms.ExecutorForm(request.POST or None, instance=request.user)
-        if form.is_valid():
+        # form = forms.ExecutorForm(request.POST, instance=request.user)
+        form = forms.ExecutorForm(request.POST)
+        form.fields['user'].initial = request.user
+        form.fields['order_accepted_num'].initial = 0
+        form.fields['order_done_num'].initial = 0
+
+        if form.is_valid() and form.cleaned_data['user']==request.user:
             executor = form.save(commit=False)
             # executor.user_id = request.user
             executor.save()
@@ -118,7 +122,8 @@ def new_executor(request):
         else:
             return render(request, 'services/new_executor.html', {'form': form})
     else:
-        form = forms.ExecutorForm()
+        form = forms.ExecutorForm(initial={'user': request.user})
+        # form = forms.ExecutorForm()
         return render(request, 'services/new_executor.html', {'form': form})
 
 
@@ -131,43 +136,27 @@ def executor_profile(request, id: int):
 # def check_group(request):
 #     return request.user.groups.filter(name='Staff').exist()
 
-
-# def filter_categories(request):
-#     orders_photo = models.OrderService.objects.filter(category__name='Фото, видео', is_done=False)
-#     orders_lawyer = models.OrderService.objects.filter(category__name='Юридические услуги', is_done=False)
-#     orders_sewing = models.OrderService.objects.filter(category__name='Пошив и ремонт одежды', is_done=False)
-#     orders_repair = models.OrderService.objects.filter(category__name='Ремонт бытовой техники', is_done=False)
-#     orders_teaching = models.OrderService.objects.filter(category__name='Обучение, репетиторство', is_done=False)
-#     context = {
-#         'orders_photo': orders_photo,
-#         'orders_lawyer': orders_lawyer,
-#         'orders_sewing': orders_sewing,
-#         'orders_repair': orders_repair,
-#         'orders_teaching': orders_teaching,
-#     }
-#     return render(request, 'categories/photo_video.html',  context)
-
 def filter_photo(request):
     orders_photo = models.OrderService.objects.filter(category__name='Фото, видео', is_done=False)
-    executors = models.Executor.objects.filter(category__name='Фото, видео')
+    executors = models.Executor.objects.filter(category__name='Фото, видео').order_by('-order_done_num')
     return render(request, 'categories/photo_video.html', {'orders_photo': orders_photo, 'executors': executors})
 
 def filter_lawyer(request):
     orders_lawyer = models.OrderService.objects.filter(category__name='Юридические услуги', is_done=False)
-    executors = models.Executor.objects.filter(category__name='Юридические услуги')
+    executors = models.Executor.objects.filter(category__name='Юридические услуги').order_by('-order_done_num')
     return render(request, 'categories/lawyer.html', {'orders_lawyer': orders_lawyer, 'executors': executors})
 
 def filter_sewing(request):
     orders_sewing = models.OrderService.objects.filter(category__name='Пошив и ремонт одежды', is_done=False)
-    executors = models.Executor.objects.filter(category__name='Пошив и ремонт одежды')
+    executors = models.Executor.objects.filter(category__name='Пошив и ремонт одежды').order_by('-order_done_num')
     return render(request, 'categories/sewing.html', {'orders_sewing': orders_sewing, 'executors': executors})
 
 def filter_repair(request):
     orders_repair = models.OrderService.objects.filter(category__name='Ремонт бытовой техники', is_done=False)
-    executors = models.Executor.objects.filter(category__name='Ремонт бытовой техники')
+    executors = models.Executor.objects.filter(category__name='Ремонт бытовой техники').order_by('-order_done_num')
     return render(request, 'categories/repair.html', {'orders_repair': orders_repair,'executors': executors})
 
 def filter_teaching(request):
     orders_teaching = models.OrderService.objects.filter(category__name='Обучение, репетиторство', is_done=False)
-    executors = models.Executor.objects.filter(category__name='Обучение, репетиторство')
+    executors = models.Executor.objects.filter(category__name='Обучение, репетиторство').order_by('-order_done_num')
     return render(request, 'categories/teaching.html', {'orders_teaching': orders_teaching, 'executors': executors})

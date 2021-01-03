@@ -3,6 +3,24 @@
 {% block body %}
 
     <h2>Home</h2>
+{% for order in orders %}
+<p> Name: {{ order.name }}<br>
+     Notes: {{ order.notes }}<br>
+     Date: {{ order.create_on_date }}<br>
+     Conditions: {{ order.condition }}<br>
+     Is Accepted?:
+    {% if order.is_accepted %}
+            <i style="color: green;" class="fas fa-check">Yes</i><br>
+    {% else %}
+            <i style="color: red;" class="fas fa-times">No</i><br>
+    {% endif %}
+     <a href="{% url 'services:order_details' order.id %}">Details</a>
+</p>
+{% endfor %}
+
+
+______________________________
+
 
 <table>
     <tr>

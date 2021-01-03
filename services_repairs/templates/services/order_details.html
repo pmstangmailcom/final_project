@@ -9,25 +9,18 @@
     Creation Date: {{ order.create_on_date }}<br>
     Customer: {{ order.user_id }}<br>
     {% if request.user == order.user_id %}
-                <a href="{% url 'services:update_order' order.id %}">Update</a>
-            {% else %}
-                No access
-            {% endif %} <br>
+                <a href="{% url 'services:update_order' order.id %}">Update</a><br>
+            {% endif %}
      {% if request.user == order.user_id %}
-                <a href="{% url 'services:delete_order' order.id %}">Delete</a>
-            {% else %}
-                No access
-            {% endif %}<br>
+                <a href="{% url 'services:delete_order' order.id %}">Delete</a><br>
+            {% endif %}
     Conditions: {{ order.condition }}<br>
     Is Accepted?:
     {% if order.is_accepted %}
             <i style="color: green;" class="fas fa-check">Yes</i><br>
             Accepting Date: {{ order.accept_on_date }}<br>
             Executor: {{ order.executor }}<br>
-            <a href="{% url 'services:executor_profile' order.executor.id %}">About executor</a> |<br>
-            Orders Number accepted  by {{ order.executor }} : {{ order.executor.order_accepted_num }}<br>
-
-
+            <a href="{% url 'services:executor_profile' order.executor.id %}">About executor</a> <br>
     {% else %}
             <i style="color: red;" class="fas fa-times">No</i><br>
             {% if order.category == request.user.executor.category %}
@@ -40,7 +33,7 @@
             <i style="color: green;" class="fas fa-check">Yes</i><br>
             Done Date: {{ order.done_on_date }}<br>
             Executor: {{ order.executor }}<br>
-            Orders Number Done by {{ order.executor }} : {{ order.executor.order_done_num }}
+
     {% else %}
             <i style="color: red;" class="fas fa-times">No</i><br>
             {% if order.user_id == request.user and order.is_accepted %}

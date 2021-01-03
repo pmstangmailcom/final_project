@@ -27,21 +27,27 @@
      <a href="{% url 'user_logout' %}">Logout</a> |
     {% endif %}
     {% endblock %}
-    <p>
 
 
+<aside>
     {% block categories %}
+    <h3>Categories</h3>
+    <ul>
+        <a href="{% url 'services:photo_video' %}"><li>Photo&video</li></a>
+        <a href="{% url 'services:lawyer' %}"><li>Legal services</li></a>
+        <a href="{% url 'services:sewing' %}"><li>Clothing Sewing&Repair</li></a>
+        <a href="{% url 'services:repair' %}"><li>Household Appliances Repair</li></a>
+        <a href="{% url 'services:teaching' %}"><li>Teaching</li></a>
+    </ul>
 
-        <a href="{% url 'services:photo_video' %}">Photo&video</a> |
-        <a href="{% url 'services:lawyer' %}">Legal services</a> |
-        <a href="{% url 'services:sewing' %}">Clothing Sewing&Repair</a> |
-        <a href="{% url 'services:repair' %}">Household Appliances Repair</a> |
-        <a href="{% url 'services:teaching' %}">Teaching</a> |
+
 
 
     {% endblock %}
+</aside>
 
-</p>
+
+
 </header>
 <body>
 {% block body %}Hello! I'm empty{% endblock %}

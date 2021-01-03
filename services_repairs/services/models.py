@@ -43,6 +43,8 @@ class OrderService(models.Model):
                                 on_delete=models.SET_NULL)
     executor = models.ForeignKey(Executor, related_name='order_to_executor', verbose_name='executor', null=True,
                                  on_delete=models.SET_NULL)
+    condition = models.TextField(max_length=300, verbose_name='conditions', blank=True, null=True)
+
 
     def __str__(self):
         return f'{self.name}({self.category})'

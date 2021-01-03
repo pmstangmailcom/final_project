@@ -7,6 +7,7 @@
  <p> Name: {{ order.name }}<br>
      Notes: {{ order.notes }}<br>
      Date: {{ order.create_on_date }}<br>
+     Conditions: {{ order.condition }}<br>
      Is Accepted?:
     {% if order.is_accepted %}
             <i style="color: green;" class="fas fa-check">Yes</i><br>
@@ -14,6 +15,15 @@
             <i style="color: red;" class="fas fa-times">No</i><br>
     {% endif %}
      <a href="{% url 'services:order_details' order.id %}">Details</a>
+</p>
+ {% endfor %}
+
+<h3>Executors</h3>
+{% for executor in executors %}
+<p> Name: {{ executor.user }}<br>
+    Order Accepted Number: {{ executor.order_accepted_num }}<br>
+    Order Done Number: {{ executor.order_done_num }}<br>
+     <a href="{% url 'services:executor_profile' executor.id %}">About executor</a> |<br>
 </p>
  {% endfor %}
 {% endblock %}

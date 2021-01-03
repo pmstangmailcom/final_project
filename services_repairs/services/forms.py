@@ -13,6 +13,7 @@ class ServicesForm(forms.ModelForm):
 class ExecutorForm(forms.ModelForm):
     class Meta:
         model = models.Executor
-        fields = '__all__'
+        # fields = '__all__'
+        fields = ('category',)
 
 

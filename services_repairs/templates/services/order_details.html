@@ -23,6 +23,7 @@
     {% if order.is_accepted %}
             <i style="color: green;" class="fas fa-check">Yes</i><br>
             Executor: {{ order.executor }}<br>
+            <a href="{% url 'services:executor_profile' order.executor.id %}">About executor</a> |<br>
             Orders Number accepted  by {{ order.executor }} : {{ order.executor.order_accepted_num }}<br>
 
 

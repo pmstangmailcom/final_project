@@ -3,7 +3,13 @@
 {% block title %}Profile{% endblock %}
 {% block body %}
 
-<h3>Profile</h3>
-
+<h3>Profile {{ order.executor }}</h3>
+Name: {{ executor.user }}<br>
+Last name: {{ executor.last_name }}<br>
+Phone: {{ executor.phone }}<br>
+Category: {{ executor.category }}<br>
+Email: {{ executor.user.email }}<br>
+Order Accepted Number: {{ executor.order_accepted_num }}<br>
+Order Done Number: {{ executor.order_done_num }}<br>
 
 {% endblock %}

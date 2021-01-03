@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Main page{% endblock %}
+{% block title %}{{ request.user }}'s orders{% endblock %}
 {% block body %}
 
 <h2>{{ request.user }}'s orders</h2>
@@ -106,9 +106,7 @@
     </tr>
     {% endfor %}
 
-
     {% endif %}
 </table>
-
 
 {% endblock %}

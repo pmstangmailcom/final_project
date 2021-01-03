@@ -32,6 +32,7 @@ def add_new_order(request):
         form = forms.ServicesForm()
         return render(request, 'services/add_new_order.html', {'form': form})
 
+
 @login_required(login_url='user_login')
 def update_order(request, id):
     order = get_object_or_404(OrderService.objects, id=id)
@@ -60,20 +61,20 @@ def all_orders(request):
 @login_required(login_url='user_login')
 def user_orders(request):
     orders = models.OrderService.objects.filter(user_id=request.user)
-    # if request.user == request.user.executor:
-    #     orders_by_executor = models.OrderService.objects.filter(executor__user=request.user)
-    #     orders_category_executor = models.OrderService.objects.filter(category=request.user.executor.category)
-    #     context = {
-    #         'orders': orders,
-    #         'orders_by_executor': orders_by_executor,
-    #         'orders_category_executor': orders_category_executor
-    #     }
-    #
-    #     return render(request, 'services/user_orders.html', context)
-    #
-    # return render(request, 'services/user_orders.html', {'orders': orders})
-    return render(request, 'services/user_orders.html', {'orders': orders})
+    executor = models.Executor.objects.filter(user_id=request.user)
 
+    if executor:
+        orders_by_executor = models.OrderService.objects.filter(executor__user=request.user)
+        orders_category_executor = models.OrderService.objects.filter(category=request.user.executor.category, is_accepted=False)
+        context = {
+            'orders': orders,
+            'orders_by_executor': orders_by_executor,
+            'orders_category_executor': orders_category_executor
+        }
+    else:
+        context = {'orders': orders,}
+
+    return render(request, 'services/user_orders.html', context)
 
 
 @login_required(login_url='user_login')
@@ -107,20 +108,22 @@ def done_order(request, id: int):
 
 def new_executor(request):
     if request.method == 'POST':
-        form = forms.ExecutorForm(request.POST)
+        # form = forms.ExecutorForm(request.POST)
+        form = forms.ExecutorForm(request.POST or None, instance=request.user)
         if form.is_valid():
             executor = form.save(commit=False)
             # executor.user_id = request.user
             executor.save()
-            return redirect('services:executor_details', executor.id)
+            return redirect('services:executor_profile', executor.id)
         else:
             return render(request, 'services/new_executor.html', {'form': form})
     else:
         form = forms.ExecutorForm()
         return render(request, 'services/new_executor.html', {'form': form})
 
+
 @login_required(login_url='user_login')
-def executor_details(request, id: int):
+def executor_profile(request, id: int):
     executor = get_object_or_404(Executor.objects, id=id)
 
     return render(request, 'services/profile.html', {'executor': executor, })
@@ -129,11 +132,11 @@ def executor_details(request, id: int):
 def check_group(request):
     return request.user.groups.filter(name='Staff').exist()
 
+
 def filter_categories(request):
     orders_photo = models.OrderService.objects.filter(category__name='Фото, видео', is_done=False)
     context = {
         'orders_photo': orders_photo,
-
     }
     return render(request, 'categories/photo_video.html', context)
 

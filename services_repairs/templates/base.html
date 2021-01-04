@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Main page{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="{% static 'services/css/services.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -12,45 +16,63 @@
 
 </head>
 <header>
-    {% block menu %}
+    <div class="menu">
+        {% block menu %}
 
-    <a href="{% url 'services:all_orders' %}">Home</a> |
+        <a class="btn btn-primary" href="{% url 'services:all_orders' %}">Home</a> |
 
-    <a href="{% url 'services:user_orders' %}">Your orders</a> |
-    <a href="{% url 'services:add_new_order' %}">Add new order</a> |
-    <a href="{% url 'services:new_executor' %}">New executor</a> |
+        <a class="btn btn-primary" href="{% url 'services:user_orders' %}">Your orders</a> |
 
+        <div align="right">
+            {% if not user.is_authenticated %}
+            <a class="btn btn-primary" href="{% url 'user_login' %}">Login</a>
 
-    {% if not user.is_authenticated %} <a href="{% url 'user_login' %}">Login</a>
+            {% else %}
+            <h4>Hello {{ user.username }}</h4>
+            <a class="btn btn-primary" href="{% url 'user_logout' %}">Logout</a> |
+            {% endif %}
+        </div>
+        <div align="center">
+            <a class="btn btn-success" btn-lg href="{% url 'services:add_new_order' %}">Add new order</a>
+            <a class="btn btn-success" btn-lg href="{% url 'services:new_executor' %}">Become executor</a>
 
-    {% else %} Hello {{ user.username }}
-     <a href="{% url 'user_logout' %}">Logout</a> |
-    {% endif %}
-    {% endblock %}
-
-
-<aside>
-    {% block categories %}
-    <h3>Categories</h3>
-    <ul>
-        <a href="{% url 'services:photo_video' %}"><li>Photo&video</li></a>
-        <a href="{% url 'services:lawyer' %}"><li>Legal services</li></a>
-        <a href="{% url 'services:sewing' %}"><li>Clothing Sewing&Repair</li></a>
-        <a href="{% url 'services:repair' %}"><li>Household Appliances Repair</li></a>
-        <a href="{% url 'services:teaching' %}"><li>Teaching</li></a>
-    </ul>
+        </div>
 
 
+        {% endblock %}
+    </div>
 
+    <aside>
+        {% block categories %}
+        <h3>Categories</h3>
+        <ul>
+            <a href="{% url 'services:photo_video' %}">
+                <li>Photo&video</li>
+            </a>
+            <a href="{% url 'services:lawyer' %}">
+                <li>Legal services</li>
+            </a>
+            <a href="{% url 'services:sewing' %}">
+                <li>Clothing Sewing&Repair</li>
+            </a>
+            <a href="{% url 'services:repair' %}">
+                <li>Household Appliances Repair</li>
+            </a>
+            <a href="{% url 'services:teaching' %}">
+                <li>Teaching</li>
+            </a>
+        </ul>
 
-    {% endblock %}
-</aside>
-
+        {% endblock %}
+    </aside>
 
 
 </header>
 <body>
-{% block body %}Hello! I'm empty{% endblock %}
+<main>
+    {% block body %}
+    {% endblock %}
+</main>
 
 </body>
 </html>

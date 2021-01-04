@@ -4,13 +4,14 @@
 
 {% block body %}
 <h3>Enter user name and password</h3>
-
+<div >
 <form action="." method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Login">
 </form>
-
+</div>
 <h3>Sing in</h3>
-<a href="{% url 'user_register' %}">Register</a> |
+<a class="btn btn-primary" href="{% url 'user_register' %}">Register</a> |
+
 {% endblock %}

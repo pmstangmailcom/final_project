@@ -1,34 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}All orders{% endblock %}
 {% block body %}
+ <a href="#orders">All Orders's orders</a> |
+<a href="#executors">Our executors</a>|
+    <h2><a name="orders">All orders</h2>
 
-    <h2>All orders</h2>
-{% for order in orders %}
-<p> Name: {{ order.name }}<br>
-     Notes: {{ order.notes }}<br>
-     Date: {{ order.create_on_date }}<br>
-     Conditions: {{ order.condition }}<br>
-     Is Accepted?:
-    {% if order.is_accepted %}
-            <i style="color: green;" class="fas fa-check">Yes</i><br>
-    {% else %}
-            <i style="color: red;" class="fas fa-times">No</i><br>
-    {% endif %}
-     <a href="{% url 'services:order_details' order.id %}">Details</a>
-</p>
-{% endfor %}
 
-________________________
 <table>
     <tr>
         <th>Name</th>
         <th>Category</th>
-        <th>Notes</th>
+<!--        <th>Notes</th>-->
         <th>Date</th>
         <th>User</th>
         <th>Update</th>
         <th>Delete</th>
         <th>Accepted</th>
+        <th>Executor</th>
         <th>Done</th>
         <th></th>
     </tr>
@@ -36,32 +24,30 @@ ________________________
     <tr>
         <td>{{ order.name }}</td>
         <td>{{ order.category }}</td>
-        <td>{{ order.notes }}</td>
+<!--        <td>{{ order.notes }}</td>-->
         <td>{{ order.create_on_date }}</td>
         <td>{{ order.user_id }}</td>
         <td>
             {% if request.user == order.user_id %}
                 <a href="{% url 'services:update_order' order.id %}">Update</a>
-            {% else %}
-                No access
+
             {% endif %}
         </td>
         <td>
             {% if request.user == order.user_id %}
                 <a href="{% url 'services:delete_order' order.id %}">Delete</a>
-            {% else %}
-                No access
+
             {% endif %}
         </td>
          <td>
             {% if order.is_accepted %}
-            <i style="color: green;" class="fas fa-check">Accepted</i>
+            <i style="color: green;" class="fas fa-check">{{ order.executor }}</i>
             {% else %}
             <i style="color: red;" class="fas fa-times">Not accepted</i>
             {% endif %}</td>
         <td>
         {% if order.is_done %}
-            <i style="color: green;" class="fas fa-check">Done</i>
+            <i style="color: green;" class="fas fa-check">{{ order.executor }}</i>
             {% else %}
             <i style="color: red;" class="fas fa-times">Not Done</i>
             {% endif %} </td>
@@ -69,6 +55,30 @@ ________________________
 
     {% endfor %}
 </table>
+<h3><a name="executors">Our Executors</h3>
+{% for executor in executors %}
+ <p>
+     Name: {{ executor.user }}<br>
+    Order Accepted Number: {{ executor.order_accepted_num }}<br>
+    Order Done Number: {{ executor.order_done_num }}<br>
+     <a href="{% url 'services:executor_profile' executor.id %}">About executor</a> |<br>
+</p>
+ {% endfor %}
+<!--{% for order in orders %}-->
+<!--<p> Name: {{ order.name }}<br>-->
+<!--    Category: {{ order.category }}<br>-->
+<!--     Notes: {{ order.notes }}<br>-->
+<!--     Date: {{ order.create_on_date }}<br>-->
+<!--     Conditions: {{ order.condition }}<br>-->
+<!--     Is Accepted?:-->
+<!--    {% if order.is_accepted %}-->
+<!--            <i style="color: green;" class="fas fa-check">Yes</i><br>-->
+<!--    {% else %}-->
+<!--            <i style="color: red;" class="fas fa-times">No</i><br>-->
+<!--    {% endif %}-->
+<!--     <a href="{% url 'services:order_details' order.id %}">Details</a>-->
+<!--</p>-->
+<!--{% endfor %}-->
 
 
 {% endblock %}

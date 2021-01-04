@@ -2,9 +2,17 @@
 {% block title %}{{ request.user }}'s orders{% endblock %}
 {% block body %}
 
-<h2>{{ request.user }}'s orders</h2>
+        <a href="#user's orders">{{ request.user }}'s orders</a> |
+        <a href="#not accepted">Your category orders not accepted</a>|
+<a href="#accepted">Your accepted and done orders</a>
+
+
+<h2><a name="user's orders">{{ request.user }}'s orders</h2>
+
 {% for order in orders %}
+
     <p> Name: {{ order.name }}<br>
+        Category: {{ order.category }}<br>
      Notes: {{ order.notes }}<br>
      Date: {{ order.create_on_date }}<br>
      Conditions: {{ order.condition }}<br>
@@ -20,12 +28,34 @@
 
     {% if request.user.executor %}
 
-    <h3>Your accepted and done orders</h3>
+<h3><a name="not accepted">Your category orders not accepted</h3>
+    {% for order in orders_category_executor %}
+
+    <p> Name: {{ order.name }}<br>
+        Category: {{ order.category }}<br>
+     Notes: {{ order.notes }}<br>
+     Date: {{ order.create_on_date }}<br>
+     Conditions: {{ order.condition }}<br>
+     Is Accepted?:
+    {% if order.is_accepted %}
+            <i style="color: green;" class="fas fa-check">Yes</i><br>
+    {% else %}
+            <i style="color: red;" class="fas fa-times">No</i><br>
+    {% endif %}
+     <a href="{% url 'services:order_details' order.id %}">Details</a>
+</p>
+    {% endfor %}
+
+    {% endif %}
+
+
+    <h3><a name="accepted">Your accepted and done orders</h3>
 
 
     {% for order in orders_by_executor %}
 
     <p> Name: {{ order.name }}<br>
+        Category: {{ order.category }}<br>
      Notes: {{ order.notes }}<br>
      Date: {{ order.create_on_date }}<br>
      Conditions: {{ order.condition }}<br>
@@ -39,24 +69,6 @@
 </p>
     {% endfor %}
 
-    <h3>Your category orders not accepted</h3>
-    {% for order in orders_category_executor %}
-
-    <p> Name: {{ order.name }}<br>
-     Notes: {{ order.notes }}<br>
-     Date: {{ order.create_on_date }}<br>
-     Conditions: {{ order.condition }}<br>
-     Is Accepted?:
-    {% if order.is_accepted %}
-            <i style="color: green;" class="fas fa-check">Yes</i><br>
-    {% else %}
-            <i style="color: red;" class="fas fa-times">No</i><br>
-    {% endif %}
-     <a href="{% url 'services:order_details' order.id %}">Details</a>
-</p>
-    {% endfor %}
-
-    {% endif %}
 
 ____________________________________
 

@@ -5,6 +5,7 @@
     <h2>Home</h2>
 {% for order in orders %}
 <p> Name: {{ order.name }}<br>
+    Category: {{ order.category }}<br>
      Notes: {{ order.notes }}<br>
      Date: {{ order.create_on_date }}<br>
      Conditions: {{ order.condition }}<br>

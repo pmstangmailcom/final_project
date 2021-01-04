@@ -1,5 +1,23 @@
-body {
-    background-color: LightCyan;
+.menu {
+    background: LightSeaGreen;
+    height: auto;
+    align: center;
+}
+
+.btn-success {
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 10px;
+    width: 45%px;
+    height: 60px;
+ }
+width: 100px;
+            height: 25px;
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #ffffff !important;
 }
 aside {
     float: left;
@@ -8,14 +26,10 @@ aside {
     padding: 2.5%;
     height: 100vh;
     border-right: 5px solid #4d4d4d;
+
 }
 aside h3{
     margin-top: 50px;
-}
-table {
-    border: 3px solid grey;
-    width: 80%;
-    border-spacing: 0;
 }
 
 aside ul li {
@@ -27,10 +41,16 @@ aside ul li {
 aside ul li:hover, aside ul a:hover {
     text-decoration: none;
     color: Maroon;
-    transform: scale(1.15);
-
+    transform: scale(1.5);
 }
-
+main {
+    background-color: LightCyan;
+}
+table {
+    border: 3px solid grey;
+    width: 80%;
+    border-spacing: 0;
+}
 tr {
     border: 2px solid black;
 }

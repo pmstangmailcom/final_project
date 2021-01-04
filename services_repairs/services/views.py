@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -22,6 +23,19 @@ def add_new_order(request):
         if form.is_valid():
             new_order = form.save(commit=False)
             new_order.user_id = request.user
+            clean_data = form.cleaned_data
+            executors = models.Executor.objects.filter(category=clean_data['category'])
+            email_list = []
+            for executor in executors:
+                email_list.append(executor.user.email)
+            subject = 'New order from your category'
+            body = "{name}  \n\n Notes: {notes} \n Conditions: {condition} \n ".format(
+                name=clean_data['name'],
+                notes=clean_data['notes'],
+                condition=clean_data['condition'],
+            )
+
+            send_mail(subject, body, 'uczoba@gmail.com', email_list)
 
             new_order.save()
             return redirect('services:order_details', new_order.id)
@@ -54,8 +68,9 @@ def delete_order(request, id):
     return render(request, 'services/user_orders.html', {'orders': orders, })
 
 def all_orders(request):
-    orders = models.OrderService.objects.all()
-    return render(request, 'services/all_orders.html', {'orders': orders, })
+    orders = models.OrderService.objects.all().order_by('-create_on_date')
+    executors = models.Executor.objects.all().order_by('-order_done_num')
+    return render(request, 'services/all_orders.html', {'orders': orders, 'executors': executors})
 
 @login_required(login_url='user_login')
 def user_orders(request):

@@ -1,9 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
-from . forms import RegisterForm, LoginForm
+from .forms import RegisterForm
 from . import forms
+
 
 def user_register(request):
     if request.user.is_authenticated:
@@ -23,7 +23,6 @@ def user_register(request):
 
 
 def user_login(request):
-
     if request.user.is_authenticated:
         return redirect('services:user_orders')
     else:
@@ -52,6 +51,3 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('user_login')
-
-
-

@@ -11,14 +11,7 @@
     width: 45%px;
     height: 60px;
  }
-width: 100px;
-            height: 25px;
-html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background: #ffffff !important;
-}
+
 aside {
     float: left;
     background: PaleTurquoise;
@@ -46,28 +39,17 @@ aside ul li:hover, aside ul a:hover {
 main {
     background-color: LightCyan;
 }
+
 table {
-    border: 3px solid grey;
+
     width: 80%;
     border-spacing: 0;
-}
-tr {
-    border: 2px solid black;
-}
-
-td {
-    border: 2px solid black;
     text-align: center;
 }
-
-tr:nth-child(2n){
-    background-color: LightGrey;
-    height: 30px;
-}
-
-tr:nth-child(2n+1){
-    background-color: Honeydew;
-    height: 20px;
+tr:hover{
+    background-color: burlywood;
+    color: darkorchid;
+    cursor: pointer
 }
 
 a:hover{
@@ -77,3 +59,7 @@ a:hover{
     transition: transform .6s ease;
 }
 
+span {
+    font-weight: bold;
+    font-size: 15px;
+}

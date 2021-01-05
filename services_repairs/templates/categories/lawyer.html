@@ -1,30 +1,35 @@
 {% extends 'base.html' %}
 {% block title %}Legal services{% endblock %}
 {% block body %}
+
 <h3>Legal services</h3>
 
-{% for order in orders_lawyer %}
- <p> Name: {{ order.name }}<br>
-     Notes: {{ order.notes }}<br>
-     Date: {{ order.create_on_date }}<br>
-     Conditions: {{ order.condition }}<br>
-     Is Accepted?:
-    {% if order.is_accepted %}
-            <i style="color: green;" class="fas fa-check">Yes</i><br>
-    {% else %}
-            <i style="color: red;" class="fas fa-times">No</i><br>
-    {% endif %}
-     <a href="{% url 'services:order_details' order.id %}">Details</a>
-</p>
- {% endfor %}
+<a href="#orders">orders</a> |
+<a href="#executors">executors</a>|
 
-<h3>Executors</h3>
-{% for executor in executors %}
- <p>
-     Name: {{ executor.user }}<br>
-    Order Accepted Number: {{ executor.order_accepted_num }}<br>
-    Order Done Number: {{ executor.order_done_num }}<br>
-     <a href="{% url 'services:executor_profile' executor.id %}">About executor</a> |<br>
+<h4><a name="orders">Orders</a></h4>
+{% for order in orders_lawyer %}
+<p><span>Name: </span>{{ order.name }}<br>
+    <span>Notes: </span>{{ order.notes }}<br>
+    <span>Date:</span> {{ order.create_on_date }}<br>
+    <span>Conditions: </span>{{ order.condition }}<br>
+    <span>Is Accepted?:</span>
+    {% if order.is_accepted %}
+    <i style="color: green;" class="fas fa-check">Yes</i><br>
+    {% else %}
+    <i style="color: red;" class="fas fa-times">No</i><br>
+    {% endif %}
+    <span><a href="{% url 'services:order_details' order.id %}">Details</a></span>
 </p>
- {% endfor %}
+{% endfor %}
+
+<h4><a name="executors">Executors</a></h4>
+{% for executor in executors %}
+<p>
+    <span>Name: </span>{{ executor.user }}<br>
+    <span>Order Accepted Number:</span> {{ executor.order_accepted_num }}<br>
+    <span>Order Done Number: </span>{{ executor.order_done_num }}<br>
+    <span> <a href="{% url 'services:executor_profile' executor.id %}">About executor</a> </span><br>
+</p>
+{% endfor %}
 {% endblock %}

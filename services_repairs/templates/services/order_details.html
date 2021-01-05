@@ -3,42 +3,42 @@
 {% block body %}
 
 <p>
-    Name: {{ order.name }}<br>
-    Category: {{ order.category }}<br>
-    Notes: {{ order.notes }}<br>
-    Creation Date: {{ order.create_on_date }}<br>
-    Customer: {{ order.user_id }}<br>
+    <span>Name:</span> {{ order.name }}<br>
+    <span>Category:</span> {{ order.category }}<br>
+    <span>Notes:</span> {{ order.notes }}<br>
+    <span>Creation Date:</span> {{ order.create_on_date }}<br>
+    <span>Customer:</span> {{ order.user_id }}<br>
     {% if request.user == order.user_id %}
-                <a href="{% url 'services:update_order' order.id %}">Update</a><br>
-            {% endif %}
-     {% if request.user == order.user_id %}
-                <a href="{% url 'services:delete_order' order.id %}">Delete</a><br>
-            {% endif %}
-    Conditions: {{ order.condition }}<br>
-    Is Accepted?:
-    {% if order.is_accepted %}
-            <i style="color: green;" class="fas fa-check">Yes</i><br>
-            Accepting Date: {{ order.accept_on_date }}<br>
-            Executor: {{ order.executor }}<br>
-            <a href="{% url 'services:executor_profile' order.executor.id %}">About executor</a> <br>
-    {% else %}
-            <i style="color: red;" class="fas fa-times">No</i><br>
-            {% if order.category == request.user.executor.category %}
-            Do you want to accept?: <a href="{% url 'services:accept_order' order.id %}">Accept</a>
-
-            {% endif %} <br>
+    <span>  <a href="{% url 'services:update_order' order.id %}">Update</a></span><br>
     {% endif %}
-    Is Done?:
+    {% if request.user == order.user_id %}
+    <span>  <a href="{% url 'services:delete_order' order.id %}">Delete</a></span><br>
+    {% endif %}
+    <span> Conditions: </span>{{ order.condition }}<br>
+    <span> Is Accepted?:</span>
+    {% if order.is_accepted %}
+    <i style="color: green;" class="fas fa-check">Yes</i><br>
+    <span> Accepting Date:</span> {{ order.accept_on_date }}<br>
+    <span> Executor:</span> {{ order.executor }}<br>
+    <span>  <a href="{% url 'services:executor_profile' order.executor.id %}">About executor</a></span> <br>
+    {% else %}
+    <i style="color: red;" class="fas fa-times">No</i><br>
+    {% if order.category == request.user.executor.category %}
+    <span> Do you want to accept?:</span> <a href="{% url 'services:accept_order' order.id %}">Accept</a>
+
+    {% endif %} <br>
+    {% endif %}
+    <span>Is Done?:</span>
     {% if order.is_done %}
-            <i style="color: green;" class="fas fa-check">Yes</i><br>
-            Done Date: {{ order.done_on_date }}<br>
-            Executor: {{ order.executor }}<br>
+    <i style="color: green;" class="fas fa-check">Yes</i><br>
+    <span> Done Date:</span> {{ order.done_on_date }}<br>
+    <span> Executor:</span> {{ order.executor }}<br>
 
     {% else %}
-            <i style="color: red;" class="fas fa-times">No</i><br>
-            {% if order.user_id == request.user and order.is_accepted %}
-            Submit if order is done: <a href="{% url 'services:done_order' order.id %}">Done</a>
-            {% endif %}
+    <i style="color: red;" class="fas fa-times">No</i><br>
+    {% if order.user_id == request.user and order.is_accepted %}
+    <span>Submit if order is done:</span> <a href="{% url 'services:done_order' order.id %}">Done</a>
+    {% endif %}
     {% endif %}
 
 </p>

@@ -16,7 +16,6 @@ urlpatterns = [
     path('user/', views.user_orders, name='user_orders'),
     path('executor/', views.new_executor, name='new_executor'),
     path('executor/<int:id>', views.executor_profile, name='executor_profile'),
-    # path('executor/orders/', views.executor_orders, name='executor_orders'),
 
     path('accept/<int:id>', views.accept_order, name='accept_order'),
     path('done/<int:id>', views.done_order, name='done_order'),
